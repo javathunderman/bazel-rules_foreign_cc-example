@@ -1,27 +1,16 @@
-#include <openssl/opensslv.h>
-#include <openssl/crypto.h>
-#include <curl/curl.h>
-#include <apr_version.h>
-#include <jansson.h>
-#include <apu_version.h>
+#include <cblas.h>
+#include <stdio.h>
 
-int main(int argc, char* argv[])
+int main(void)
 {
-    static char s[4096];
+  int i=0;
+  double A[6] = {1.0,2.0,1.0,-3.0,4.0,-1.0};
+  double B[6] = {1.0,2.0,1.0,-3.0,4.0,-1.0};
+  double C[9] = {.5,.5,.5,.5,.5,.5,.5,.5,.5};
+  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans,3,3,2,1,A, 3, B, 3,2,C,3);
 
-    snprintf(s, sizeof(s),
-            "cURL compiled: \"%s\" loaded: \"%s\"; \n\n"
-            "OpenSSL compiled: \"%s\" loaded: \"%s\" (\"%s\");\n\n"
-            "APR compiled: \"%s\" loaded: \"%s\"; \n\n"
-            "APR-UTIL compiled: \"%s\" loaded: \"%s\"; \n\n"
-            "jansson compiled: \"%s\"",
-            LIBCURL_VERSION, curl_version(),
-            OPENSSL_VERSION_TEXT, OpenSSL_version(OPENSSL_VERSION), OpenSSL_version(OPENSSL_CFLAGS),
-            APR_VERSION_STRING, apr_version_string(),
-            APU_VERSION_STRING, apu_version_string(),
-            JANSSON_VERSION
-    );
-    printf("%s\n", s);
-
-    return 0;
+  for(i=0; i<9; i++)
+    printf("%lf ", C[i]);
+  printf("\n");
+  return 0;
 }
