@@ -15,13 +15,3 @@ load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_depende
 # https://bazelbuild.github.io/rules_foreign_cc/0.9.0/flatten.html#rules_foreign_cc_dependencies
 rules_foreign_cc_dependencies()
 
-
-all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//visibility:public"])"""
-
-http_archive(
-   name = "openblas",
-   build_file_content = all_content,
-   strip_prefix = "OpenBLAS-0.3.30",
-   urls = ["https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.30/OpenBLAS-0.3.30.tar.gz"],
-)
-
