@@ -4,7 +4,7 @@ load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
 
 filegroup(
     name = "lean_src",
-    srcs = ["lean4-4.25.1/CMakeLists.txt"] + glob(["lean4-4.25.1/cmake/*", "lean4-4.25.1/src/**"]), # glob(["lean-4.25.1/**"]),
+    srcs = ["lean4-4.25.1/CMakeLists.txt"] + glob(["lean4-4.25.1/cmake/*", "lean4-4.25.1/src/**", "lean4-4.25.1/stage0/**"]), # glob(["lean-4.25.1/**"]),
     visibility = ["//visibility:public"],
 )
 
@@ -19,6 +19,7 @@ cmake(
     out_binaries = select({
         "//conditions:default": ["lean"],
     }),
+    tags = ["requires-network"],
     # cache_entries = {
     #     "CMAKE_C_FLAGS": "--preset release",
     # },
