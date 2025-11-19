@@ -20,14 +20,10 @@ cmake(
         "//conditions:default": ["lean"],
     }),
     tags = ["requires-network"],
-    # cache_entries = {
-    #     "CMAKE_C_FLAGS": "--preset release",
-    # },
 )
 
 cc_binary(
     name = "lean_test",
-    # includes just hello.h, include directory: "include/version123"
     srcs = ["//static:main.c"],
     deps = [":lean4"],
 )
