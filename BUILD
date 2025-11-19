@@ -1,28 +1,32 @@
-# example code is taken from https://github.com/Akagi201/learning-cmake/tree/master/hello-world-lib
-# for test only
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
 
+
 filegroup(
-    name = "srcs",
-    srcs = glob(["src/**"]),
+    name = "lean_src",
+    srcs = ["lean4-4.25.1/CMakeLists.txt"] + glob(["lean4-4.25.1/cmake/*", "lean4-4.25.1/src/**"]), # glob(["lean-4.25.1/**"]),
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "main_src",
+    srcs = glob(["src/**"]),
+    visibility = ["//visibility:public"],
+)
 cmake(
-    name = "libhello",
-    cache_entries = {
-        "CMAKE_MACOSX_RPATH": "True",
-    },
-    lib_source = ":srcs",
+    name = "lean4",
+    lib_source = ":lean_src",
     out_binaries = select({
-        "//conditions:default": ["hello"],
+        "//conditions:default": ["lean"],
     }),
+    # cache_entries = {
+    #     "CMAKE_C_FLAGS": "--preset release",
+    # },
 )
 
-filegroup(
-    name = "binary",
-    srcs = [":libhello"],
-    output_group = select({
-        "//conditions:default": "hello",
-    }),
+cc_binary(
+    name = "lean_test",
+    # includes just hello.h, include directory: "include/version123"
+    srcs = ["//static:main.c"],
+    deps = [":lean4"],
 )
