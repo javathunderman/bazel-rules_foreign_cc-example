@@ -9,6 +9,13 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_foreign_cc/archive/refs/tags/0.9.0.tar.gz",
 )
 
+http_archive(
+      name = "lean",
+      url = "https://github.com/leanprover/lean4/archive/refs/tags/v4.25.1.tar.gz",
+      strip_prefix = "lean4-4.25.1",
+      build_file = "//:lean.BUILD",
+)
+
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
 
 # This sets up some common toolchains for building targets. For more details, please see
